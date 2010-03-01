@@ -1,0 +1,9 @@
+{% extends "wizardcms/widgets/base.html" %}
+
+{% block content %}
+
+<form action="{% url wizardcms-globalsearch %}" method="get">
+<input name="keyword" type="text" value="{{ keyword }}" class="searchformInput" />
+<input type="submit" name="Submit" value="Szukaj" class="searchformBtn" />
+
+{% endblock %}

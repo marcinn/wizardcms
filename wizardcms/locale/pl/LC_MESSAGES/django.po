@@ -1,0 +1,309 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-31 22:35+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:63 admin.py:125
+msgid "Common"
+msgstr "Podstawowe"
+
+#: admin.py:66
+msgid "Node description"
+msgstr "opis"
+
+#: admin.py:68 admin.py:130
+msgid "Provide page title, short title for menus and slug for friendly links."
+msgstr ""
+"Wprowadź tytuł strony, krótki tytuł do menu oraz slug dla przyjaznych linków."
+
+#: admin.py:71 admin.py:133
+msgid "Publication options"
+msgstr "Opcje publikacji"
+
+#: admin.py:72 admin.py:134
+msgid ""
+"Change publication settings here. Leave fields \"publish from\" and "
+"\"publish to\" empty for infinite publishing."
+msgstr ""
+"Zmień opcje publikacji. Pozostaw pola \"Publikuj od\" oraz \"Publikuj do\" "
+"puste, jeśli chcesz opublikować stronę bez limitu czasu."
+
+#: admin.py:79 admin.py:81 admin.py:147 admin.py:149
+msgid "Meta data"
+msgstr "Dane Meta"
+
+#: admin.py:128
+msgid "Page description"
+msgstr "opis"
+
+#: admin.py:142
+msgid "Attachments"
+msgstr "Załączniki"
+
+#: admin.py:155
+msgid "Gallery"
+msgstr "Galeria"
+
+#: models.py:26
+msgid "Page template"
+msgstr "Szablon strony"
+
+#: models.py:27
+msgid "Section template"
+msgstr "Szablon sekcji"
+
+#: models.py:28
+msgid "Custom template"
+msgstr "Własny szablon"
+
+#: models.py:34
+msgid "New"
+msgstr "Nowy"
+
+#: models.py:35
+msgid "Assigned"
+msgstr "Przypisany"
+
+#: models.py:36
+msgid "In work"
+msgstr "Opracowywany"
+
+#: models.py:37
+msgid "Proof-reading"
+msgstr "Korekta"
+
+#: models.py:38
+msgid "Accepted"
+msgstr "Zaakceptowany"
+
+#: models.py:39
+msgid "Published"
+msgstr "Opublikowany"
+
+#: models.py:47
+msgid "Plain text"
+msgstr "Zwykły tekst"
+
+#: models.py:48
+msgid "Wiki markup"
+msgstr "Formatowanie Wiki"
+
+#: models.py:49
+msgid "HTML code"
+msgstr "Kod HTML"
+
+#: models.py:61 models.py:79 models.py:172 models.py:305 models.py:333
+msgid "name"
+msgstr "nazwa"
+
+#: models.py:62
+msgid "is active"
+msgstr "aktywny?"
+
+#: models.py:65 models.py:99
+msgid "language"
+msgstr "język"
+
+#: models.py:66
+msgid "languages"
+msgstr "języki"
+
+#: models.py:80
+msgid "path"
+msgstr "ścieżka"
+
+#: models.py:81
+msgid "content"
+msgstr "zawartość"
+
+#: models.py:85 models.py:212
+msgid "template"
+msgstr "szablon"
+
+#: models.py:86
+msgid "templates"
+msgstr "szablony"
+
+#: models.py:100
+msgid "parent node"
+msgstr "nadrzędna"
+
+#: models.py:102 models.py:261 models.py:365
+msgid "title"
+msgstr "tytuł"
+
+#: models.py:103
+msgid "short title"
+msgstr "krótki tytuł"
+
+#: models.py:104
+msgid ""
+"Type here unique alias for page. Use only small letters, underscore and "
+"digits"
+msgstr ""
+"Wprowadź unikalny alias dla strony. Użyj tylko małych liter, znaku "
+"podkreślenia lub cyfr"
+
+#: models.py:104
+msgid "slug"
+msgstr ""
+
+#: models.py:105
+msgid "meta description"
+msgstr "opis"
+
+#: models.py:106
+msgid "meta keywords"
+msgstr "słowa kluczowe"
+
+#: models.py:107
+msgid "meta author"
+msgstr "autor"
+
+#: models.py:108
+msgid "created at"
+msgstr "utworzono"
+
+#: models.py:109
+msgid "updated at"
+msgstr "uaktualniono"
+
+#: models.py:147
+msgid "Navigation"
+msgstr "Nawigacja"
+
+#: models.py:173
+msgid "description"
+msgstr "opis"
+
+#: models.py:176 models.py:215
+msgid "category"
+msgstr "kategoria"
+
+#: models.py:177
+msgid "categories"
+msgstr "kategorie"
+
+#: models.py:210
+msgid "Set optional publication period"
+msgstr "Ustaw opcjonalny okres publikacji"
+
+#: models.py:210
+msgid "publish from"
+msgstr "publikuj od"
+
+#: models.py:211
+msgid "publish to"
+msgstr "publikuj do"
+
+#: models.py:213
+msgid "introduction"
+msgstr "wstęp"
+
+#: models.py:214
+msgid "post date"
+msgstr "data publikacji"
+
+#: models.py:219
+msgid "page"
+msgstr "strona"
+
+#: models.py:220
+msgid "pages"
+msgstr "strony"
+
+#: models.py:231 models.py:311 models.py:334 models.py:364
+msgid "is published"
+msgstr "opublikowany?"
+
+#: models.py:268
+msgid "image path"
+msgstr "ścieżka obrazka"
+
+#: models.py:271 models.py:361
+msgid "display order"
+msgstr "kolejność"
+
+#: models.py:272
+msgid "text format"
+msgstr "format"
+
+#: models.py:276
+msgid "section"
+msgstr "sekcja"
+
+#: models.py:277
+msgid "sections"
+msgstr "sekcje"
+
+#: models.py:309
+msgid "file path"
+msgstr "ścieżka pliku"
+
+#: models.py:315
+msgid "attachment"
+msgstr "Załącznik"
+
+#: models.py:316
+msgid "attachments"
+msgstr "Załączniki"
+
+#: models.py:340
+msgid "menu"
+msgstr "menu"
+
+#: models.py:341
+msgid "menus"
+msgstr "menu"
+
+#: models.py:362
+msgid "type"
+msgstr "typ"
+
+#: models.py:363
+msgid "value"
+msgstr "wartość"
+
+#: models.py:369
+msgid "menu item"
+msgstr "element menu"
+
+#: models.py:370
+msgid "menu items"
+msgstr "elementy menu"
+
+#: widgets.py:53
+msgid "Template syntax is valid"
+msgstr "Składnia szablonu jest poprawna"
+
+#: widgets.py:55
+msgid "Template has following errors:"
+msgstr "Szablon zawiera błędy:"
+
+#: widgets.py:58
+#, python-format
+msgid "Template does not exist: %s"
+msgstr "Szablon nie istnieje: %s"
+
+#: views/pages.py:26
+msgid ""
+"Cannot render page template \"%(name)\".                               "
+"Please correct template errors: %(errors)"
+msgstr ""
+"Nie można użyć szablonu \"%(name)\". Popraw błąd w szablonie: %(errors)"
+
+#~ msgid "Category"
+#~ msgstr "Kategoria"

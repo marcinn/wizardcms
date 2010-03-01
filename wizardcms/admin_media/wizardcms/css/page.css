@@ -1,0 +1,19 @@
+form#page_form fieldset.aligned.left { width: 40%; float: left;margin-bottom: 2em !important; }
+form#page_form fieldset.aligned.right { width: 59%; float: right;margin-bottom: 2em !important; }
+form#page_form fieldset.aligned.clear { clear: right; float: none; }
+form#page_form div.inline-group { clear: both; float: none; }
+
+form#page_form fieldset.aligned div.form-row ul.inline {
+    margin-left: 0 !important;
+}
+form#page_form fieldset.aligned div.form-row label {
+    width: 5em !important;
+}
+form#page_form fieldset.aligned div.form-row p.help {
+    margin-left: 6.5em !important;
+}
+
+form#page_form fieldset.aligned.left input[type=text], form#page_form fieldset.aligned.left textarea {
+        width: 60%;
+}
+form#page_form fieldset.aligned.right div.form-row div.field-box label.inline { display: inline; width: auto !important; }

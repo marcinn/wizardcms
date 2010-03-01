@@ -1,0 +1,33 @@
+div.NodeNavigation
+{
+    width: 19%;
+    float: left;
+    padding: 4px;
+    border:1px solid #DDDDDD !important;
+}
+
+div.NodeNavigation h3 {
+    padding: 0;
+    margin: 0 0 6px 0;
+    font-size: 13px;
+}
+
+div.NodeNavigation ul {
+    list-style-position: inside;
+    padding: 0;
+    margin: 0;
+}
+div.NodeNavigation li {
+    background: url(../img/admin/treenav_page.gif) 8px 1px no-repeat;
+    padding-left: 24px;
+    list-style-type: none;
+}
+
+div.NodeNavigation li.has_c {
+    background: url(../img/admin/treenav_folder.gif) left top no-repeat;
+}
+
+body.change-list.wizardcms-page div#content-main { 
+    width: 79%;
+    float: right;
+}

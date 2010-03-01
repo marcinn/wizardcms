@@ -1,0 +1,18 @@
+{% extends "wizardcms/base_site.html" %}
+{% load wizardcms_tags widgets %}
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ page.title }}</h2>
+{% include_widget WizardCmsRenderPage page %}
+{% if page.children.published %}
+<div id="SubPages">
+    {% for subpage in page.children.published %}
+    <div class="subpage">
+        <h3><a href="{% url wizardcms-page-view slug=subpage.slug %}">{{ subpage.title }}</a></h3>
+        <p>{{ subpage.intro }} <a class="more" href="{% url wizardcms-page-view slug=subpage.slug %}">Sprawdź szczegóły<span> o {{ subpage.title }}</span></a></p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

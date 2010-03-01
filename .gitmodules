@@ -1,0 +1,45 @@
+[submodule "apps/django-merlinx"]
+	path = apps/django-merlinx
+	url = git://github.com/marcinn/django-merlinx.git
+[submodule "apps/django-imageprocessor"]
+	path = apps/django-imageprocessor
+	url = git://github.com/marcinn/django-imageprocessor.git
+[submodule "apps/django-banners"]
+	path = apps/django-banners
+	url = git://github.com/marcinn/django-banners.git
+[submodule "apps/django-widgets"]
+	path = apps/django-widgets
+	url = git://github.com/marcinn/django-widgets.git
+[submodule "apps/django-newsletter"]
+	path = apps/django-newsletter
+	url = git://github.com/marcinn/django-newsletter.git
+[submodule "apps/django-tabbed-admin"]
+	path = apps/django-tabbed-admin
+	url = git://github.com/marcinn/django-tabbed-admin.git
+[submodule "apps/django-product-catalog"]
+	path = apps/django-product-catalog
+	url = git://github.com/marcinn/django-product-catalog.git
+[submodule "apps/django-positions"]
+	path = apps/django-positions
+	url = http://github.com/jpwatts/django-positions.git
+[submodule "apps/django-annoucements"]
+	path = apps/django-annoucements
+	url = http://github.com/brosner/django-announcements.git
+[submodule "apps/django-attachments"]
+	path = apps/django-attachments
+	url = http://github.com/bartTC/django-attachments.git
+[submodule "apps/django-markup"]
+	path = apps/django-markup
+	url = http://github.com/bartTC/django-markup.git
+[submodule "apps/antymedia-antyadmin"]
+	path = apps/antymedia-antyadmin
+	url = git@git.antymedia.eu:antymedia/antyadmin.git
+[submodule "apps/django-registry"]
+	path = apps/django-registry
+	url = git://github.com/marcinn/django-registry.git
+[submodule "apps/netwizard-platform"]
+	path = apps/netwizard-platform
+	url = git@git.antymedia.eu:marcinnowak/netwizard-platform.git
+[submodule "apps/django-chunks"]
+	path = apps/django-chunks
+	url = git://github.com/marcinn/django-chunks.git

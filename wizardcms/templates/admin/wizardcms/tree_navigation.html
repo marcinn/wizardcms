@@ -1,0 +1,8 @@
+<h3>Nawigacja</h3>
+<ul>
+    <li class="has_c"><a href="../page/?parent__isnull=1">{{ title|default:"SITEMAP" }}</a>
+{% with navigation.tree.nodes as nodes %}
+    {% include "admin/wizardcms/tree_navigation_node.html" %}
+{% endwith %}
+    </li>
+</ul>

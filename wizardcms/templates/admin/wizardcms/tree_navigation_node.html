@@ -1,0 +1,21 @@
+{% if nodes %}
+<ul>
+{% for node in nodes %}
+{% comment %}
+<li{% if node.children %} class="has_c"{% endif %}><a href="{{ node.url }}">{{ node.value.short_title|default:node }}</a>
+{% endcomment %}
+<li class="has_c"><a href="{{ node.url }}">{{ node.value.short_title|default:node }}</a>
+
+    {% comment%} DJANGO RECURSIVE INCLUSION HACK {% endcomment %}
+
+    {% with "admin/wizardcms/tree_navigation_node.html" as filename %}
+    {% with node.children as nodes %}
+      {% include filename %}
+    {% endwith %}
+    {% endwith %}
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+

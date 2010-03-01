@@ -1,0 +1,8 @@
+{% if title %}<h2>{{ title }}</h2>{% endif %}
+<div{% if id %} id="{{ id }}Box"{% endif %} class="box{% if class %} {{class}}_box{% endif %}">
+  <div class="box_body">
+	<div{% if id %} id="{{ id }}"{% endif %} class="widget{% if class %} {{ class }}_widget{% endif %}">
+		{% block content %}{% endblock %}
+	</div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+{% extends "wizardcms/base_site.html" %}
+{% block content %}
+<h2>Index</h2>
+{% endblock %}
+
+{% block sidebar %}
+{% for widget in menu %}
+{{ widget }}
+{% endfor %}
+{% endblock %}

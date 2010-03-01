@@ -1,0 +1,12 @@
+{% extends "wizardcms/widgets/decorators/box.html" %}
+
+{% block content %}
+{% if show_title %}<h3>{{ menu.name }}</h3>{% endif %}
+{% if menu.published_items %}
+<ul class="wizardcms-menu">
+{% for item in menu.published_items %}
+<li{% if forloop.first %} class="first"{% endif %}><a href="{{ item.url }}">{{ item.short_title }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

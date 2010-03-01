@@ -1,0 +1,11 @@
+{% extends "admin/change_list.html" %}
+{% load wizardcms_tags %}
+
+{% block bodyclass %}change-list wizardcms-page{% endblock %}
+
+{% block content %}
+<div class="NodeNavigation">
+    {% wizardcms_pages_navigation cl %}
+</div>
+{{ block.super }}
+{% endblock %}
