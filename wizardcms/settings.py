@@ -1,4 +1,5 @@
 BASE_APPS = (
+        'wizardcms',
         'antymedia.antyadmin',
         'attachments',
         'announcements',
@@ -10,5 +11,4 @@ BASE_APPS = (
         'tabbedadmin',
         'django_widgets',
         'chunks',
-        'wizardcms',
         )
