@@ -299,7 +299,7 @@ class PageSection(models.Model):
     @property
     def as_html(self):
         markups = dict(MARKUP_PROCESSORS)
-        content = markups[self.markup](self.content)
+        content = mark_safe(markups[self.markup](self.content))
         return get_template_from_string(self.template.content).render(Context({'title': self.title, 'content': content}))
 
 
