@@ -401,7 +401,7 @@ class MenuItem(models.Model):
 
     @property
     def target(self):
-        return get_menu_item_provider(self.type).get_object(self.value)
+        return self.content_object
 
     @property
     def url(self):
