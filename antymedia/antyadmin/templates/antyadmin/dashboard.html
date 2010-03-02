@@ -1,0 +1,16 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<h2>{% trans "Dashboard" %}</h2>
+<div id="Dashboard">
+    {% for item in dashboard %}
+    <div class="item">
+        <h2>{{ item.title }}</h2>
+        <div class="content">
+        {{ item.render }}
+    </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

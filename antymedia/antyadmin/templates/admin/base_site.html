@@ -1,0 +1,13 @@
+{% extends "admin/base.html" %}
+{% load i18n widgets %}
+
+{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
+
+{% block branding %}{% include_widget AntyBranding %}{% endblock %}
+
+{% block nav-global %}
+{% if request.user.is_authenticated %}
+{% include_widget Sitemenu %}   
+{% endif %}
+{% endblock %}
+

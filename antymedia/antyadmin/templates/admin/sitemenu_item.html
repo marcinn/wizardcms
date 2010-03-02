@@ -1,0 +1,13 @@
+{% for item in menu %}
+<li><a href="{{ item.url|default:"#" }}">{{ item.caption }}</a>
+{% if item.has_childs %}
+    {% with "admin/sitemenu_item.html" as filename %}
+    {% with item.childs as menu %}
+    <ul class="menu">
+    {% include filename %}
+    </ul>
+    {% endwith %}
+    {% endwith %}
+{% endif %}
+</li>
+{% endfor %}
