@@ -242,6 +242,11 @@ class Page(Node):
         """
         return not (self.publish_from and self.publish_to) and self.is_published
     get_is_published.short_description = _('is published')
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('wizardcms-page-view', (), dict(slug=self.slug))
+
     
     def intro(self):
         if self.introduction:
