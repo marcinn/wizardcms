@@ -5,9 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.cache import cache_page, never_cache
 from django.template.loader import get_template_from_string, get_template
-from netwizard.django.helpers import expose
 from wizardcms import models
-from netwizard.django.view import ListView, View
 from django.utils.translation import ugettext as _
 from django.template import TemplateSyntaxError
 from django.views.generic.list_detail import object_list, object_detail
