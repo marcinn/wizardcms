@@ -1,7 +1,7 @@
 import datetime
 from south.db import db
 from django.db import models
-from netwizard.wizardcms.models import *
+from wizardcms.models import *
 
 class Migration:
     no_dry_run = True
@@ -23,7 +23,7 @@ class Migration:
             'page': ('models.ForeignKey', ['Page'], {'related_name': "'attachments'"})
         },
         'wizardcms.page': {
-            'Meta': {'_bases': ['netwizard.wizardcms.models.Node']},
+            'Meta': {'_bases': ['wizardcms.models.Node']},
             'introduction': ('models.TextField', [], {'null': 'True', 'blank': 'True'}),
             'node_ptr': ('models.OneToOneField', ["orm['wizardcms.Node']"], {}),
             'post_date': ('models.DateField', [], {'null': 'True'}),

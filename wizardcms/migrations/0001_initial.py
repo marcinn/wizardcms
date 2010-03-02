@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from netwizard.wizardcms.models import *
+from wizardcms.models import *
 
 class Migration:
     

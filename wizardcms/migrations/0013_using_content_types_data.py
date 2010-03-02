@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from netwizard.wizardcms.models import *
+from wizardcms.models import *
 from django.contrib.contenttypes.models import ContentType
 
 class Migration:
@@ -24,7 +24,7 @@ class Migration:
             'page': ('models.ForeignKey', ['Page'], {})
         },
         'wizardcms.page': {
-            'Meta': {'_bases': ['netwizard.wizardcms.models.Node']},
+            'Meta': {'_bases': ['wizardcms.models.Node']},
             'node_ptr': ('models.OneToOneField', ["orm['wizardcms.Node']"], {}),
             'publish_from': ('models.DateField', [], {'null': 'True', 'blank': 'True'}),
             'publish_to': ('models.DateField', [], {'null': 'True', 'blank': 'True'}),

@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from netwizard.wizardcms.models import *
+from wizardcms.models import *
 
 class Migration:
     
@@ -28,7 +28,7 @@ class Migration:
             'page': ('models.ForeignKey', ['Page'], {'related_name': "'attachments'"})
         },
         'wizardcms.page': {
-            'Meta': {'_bases': ['netwizard.wizardcms.models.Node']},
+            'Meta': {'_bases': ['wizardcms.models.Node']},
             'category': ('models.ForeignKey', ['Category'], {'related_name': "'pages'", 'null': 'True', 'verbose_name': "_('category')", 'blank': 'True'}),
             'introduction': ('models.TextField', [], {'null': 'True', 'verbose_name': "_('introduction')", 'blank': 'True'}),
             'node_ptr': ('models.OneToOneField', ["orm['wizardcms.Node']"], {}),
