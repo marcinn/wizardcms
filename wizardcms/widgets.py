@@ -35,7 +35,7 @@ class WizardCmsRenderPage(Widget):
         """
 
         output = []
-        for section in value.sections():
+        for section in value.sections.all():
             output.append(section.as_html)
             
         return ''.join(output)
