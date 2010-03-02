@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import models
 import logging
-from netwizard.core import manager
+import re
+import unicodedata
 
 try:
     from trac.test import EnvironmentStub, Mock, MockPerm 
@@ -33,14 +35,20 @@ def load_template_source(template_name, template_dirs=[]):
 load_template_source.is_usable=True
 
 
-def get_all_menu_item_providers():
-    from plugins import IMenuItemTypeProvider
-    return manager.find_extensions(IMenuItemTypeProvider)
+__re_slugify__ = re.compile('[^\w-]+')
 
-def get_menu_item_provider(symbol):
-    qs = [provider for provider in get_all_menu_item_providers() if symbol == provider.symbol ]
-    if qs:
-        return qs[0]
-    return None
+def slugify(string):
+    """
+    transform input string to slug-like value
+    (no spaces, lowercase, no lang-specific chars)
+    """
+    slug = unicodedata.normalize('NFKD', 
+             unicode(string.lower())
+             .replace(u'ł','l')
+             .replace(u'Ł','L')
+           ).encode('ascii','ignore').lstrip().rstrip()
+    return __re_slugify__.sub('-', slug)
+
+
 
 

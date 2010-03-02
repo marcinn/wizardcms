@@ -9,7 +9,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from utils import parse_tracwiki, get_menu_item_provider
+from utils import parse_tracwiki, slugify
 from django.utils.html import linebreaks, escape
 from django.utils.safestring import mark_safe, mark_for_escaping
 from django.template.loader import get_template_from_string
@@ -98,6 +98,15 @@ class NodeManager(models.Manager):
         return super(NodeManager, self).get_query_set().order_by('display_order')
 
 
+class NodeTypes(object):
+    def __init__(self):
+        self.types = ContentType.objects.filter(app_label='wizardcms',
+            model__in=('page', 'link'))
+
+    def __iter__(self):
+        return self.types.values_list('id', 'model').__iter__()
+
+
 class Node(models.Model):
     """ a sitemap node model """
     language = models.ForeignKey(Language, verbose_name=_('language'))
@@ -111,7 +120,7 @@ class Node(models.Model):
     meta_author = models.CharField(max_length=64, null=True, blank=True, verbose_name=_('meta author'))
     created_at = models.DateField(auto_now_add=True, verbose_name=_('created at'))
     updated_at = models.DateField(auto_now_add=True, auto_now=True, verbose_name=_('updated at'))
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType)#, choices=NodeTypes())
     content_object = generic.GenericForeignKey('content_type', 'id')
     display_order = models.PositiveIntegerField(default=0)
     objects = NodeManager()
@@ -159,9 +168,8 @@ class Node(models.Model):
         if not self.slug:
             parts = self.get_navigation_path().titles()
             parts.append(self.slug.split('-')[-1])
-            parts = [h.slugify(p) for p in parts if p]
+            parts = [slugify(p) for p in parts if p]
             self.slug = '-'.join(parts)
-            # self.slug = h.slugify(self.title)
 
         if not self.content_type_id:
             self.content_type = ContentType.objects.get_for_model(self.__class__)
@@ -227,9 +235,6 @@ class Page(Node):
         verbose_name = _('page')
         verbose_name_plural = _('pages')
 
-#    def child_nodes(self):
-#        return self.__class__.objects.filter(parent=self)
-    
     def get_is_published(self):
         """ 
         returns True, if Page is published
@@ -241,8 +246,8 @@ class Page(Node):
     def intro(self):
         if self.introduction:
             return self.introduction
-        if self.pagesection_set.count():
-            return self.pagesection_set.all()[0].content[:200]
+        if self.sections.count():
+            return self.sections.all()[0].content[:200]
         return ''
 
     def image(self):
@@ -251,12 +256,9 @@ class Page(Node):
         return self.section_image()
 
     def section_image(self):
-        if self.pagesection_set.count():
-            return self.pagesection_set.all()[0].image_path
+        if self.sections.count():
+            return self.sections.all()[0].image_path
         return None
-
-    def sections(self):
-        return self.pagesection_set.all()
 
     @property
     def children(self):
@@ -270,7 +272,7 @@ class PageSectionManager(models.Manager):
 
 class PageSection(models.Model):
     """ a part of page with own image, content, title and template """
-    page = models.ForeignKey(Page)
+    page = models.ForeignKey(Page, related_name='sections')
     title = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('title'))
     content = models.TextField(blank=True, verbose_name=_('content'))
     image_path = models.ImageField(
@@ -332,6 +334,10 @@ class MenuManager(models.Manager):
         return self.filter(is_published=True)
 
 
+class Link(Node):
+    url = models.CharField(max_length=255)
+    
+
 class Menu(models.Model):
     """ 
     menu holds many items (nodes)
@@ -356,27 +362,39 @@ class Menu(models.Model):
     def published_items(self):
         return self.items.published()
 
+class MenuItemQuerySet(models.query.QuerySet):
+    def published(self):
+        return self.filter(is_published=True)
 
 class MenuItemManager(models.Manager):
     def get_query_set(self):
-        return super(MenuItemManager, self).get_query_set().order_by('display_order')
+        return MenuItemQuerySet(self.model).order_by('display_order')
 
     def published(self):
-        return self.get_query_set().filter(is_published=True)
+        return self.get_query_set().published()
 
+
+MENU_ITEM_TYPES = (
+        ('Url', 'Link'),
+        ('Object', 'Object'),
+        )
 
 class MenuItem(models.Model):
     menu = models.ForeignKey(Menu, related_name='items')
     display_order = models.PositiveIntegerField(verbose_name=_('display order'))
-    type = models.CharField(max_length=32, verbose_name=_('type'))
+    type = models.CharField(max_length=32, verbose_name=_('type'), choices=MENU_ITEM_TYPES)
     value = models.CharField(max_length=255, verbose_name=_('value'))
     is_published = models.BooleanField(default=False, verbose_name=_('is published'))
     title = models.CharField(max_length=255, default='', blank=True, verbose_name=_('title'))
+    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    content_id = models.PositiveIntegerField(null=True, blank=True)
+    content_object = generic.GenericForeignKey('content_type', 'content_id')
     objects = MenuItemManager()
 
     class Meta:
         verbose_name = _('menu item')
         verbose_name_plural = _('menu items')
+        ordering = ('display_order', )
 
     def __unicode__(self):
         return '%s: %s' % (self.type, self.target)
@@ -387,7 +405,9 @@ class MenuItem(models.Model):
 
     @property
     def url(self):
-        return get_menu_item_provider(self.type).get_url(self.value)
+        if self.content_id: # change to not self.is_url
+            return self.content_object.get_absolute_url()
+        return self.value
 
     @property
     def short_title(self):

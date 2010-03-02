@@ -2,8 +2,10 @@ from django.contrib import admin
 from netwizard.django.apps.tabbed_admin import admin as tabadmin
 from netwizard.django.apps.batchadmin import admin as batchadmin
 from django.contrib.admin import site, options
+from django.contrib.admin.util import quote, unquote, flatten_fieldsets, get_deleted_objects
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.forms.models import modelform_factory, ModelForm
 from netwizard.core import manager as componentmgr
 import forms
 import models
@@ -49,6 +51,7 @@ class PageAttachmentInline(admin.TabularInline):
 
 class NodeAdmin(tabadmin.TabbedModelAdmin):
     change_list_template = "admin/wizardcms/page/change_list.html"
+    change_form_template = "admin/wizardcms/node/change_form.html"
     list_display = ('id','title','slug','language','get_navigation_path','status','created_at','updated_at')
     list_filter = ('language','parent','status','created_at','updated_at')
     list_select_related = True
@@ -92,6 +95,28 @@ class NodeAdmin(tabadmin.TabbedModelAdmin):
     #        admin_instance = self.admin_site._registry[model_class]
     #    return admin_instance
 
+
+    def get_form(self, request, obj=None, **kwargs):
+        if obj.content_type_id:
+            if self.declared_fieldsets:
+                fields = flatten_fieldsets(self.declared_fieldsets)
+            else:
+                fields = None
+            if self.exclude is None:
+                exclude = []
+            else:
+                exclude = list(self.exclude)
+            model_class = obj.content_object or obj.content_type.model_class()
+            defaults = {
+                "form": self.form,
+                "fields": fields,
+                "exclude": exclude + kwargs.get("exclude", []),
+                "formfield_callback": self.formfield_for_dbfield,
+            }
+            defaults.update(kwargs)
+            return modelform_factory(model=model_class, 
+                    **defaults)
+        return super(NodeAdmin, self).get_form(self, request, obj, **kwargs)
 
 #    def change_view(self, request, object_id, extra_context=None):
 #        return self._get_content_object_admin(object_id).change_view(request, object_id, extra_context)

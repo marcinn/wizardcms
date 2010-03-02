@@ -1,7 +1,7 @@
 from django.utils.safestring import mark_safe, mark_for_escaping
 from django import template
 from wizardcms.utils import parse_tracwiki
-from wizardcms.models import Page, Menu
+from wizardcms.models import Page, Menu, MenuItem
 from django.template import TemplateSyntaxError
 
 register = template.Library()
