@@ -1,12 +1,10 @@
 from django.contrib import admin
-from netwizard.django.apps.tabbed_admin import admin as tabadmin
-from netwizard.django.apps.batchadmin import admin as batchadmin
+from tabbedadmin import admin as tabadmin
 from django.contrib.admin import site, options
 from django.contrib.admin.util import quote, unquote, flatten_fieldsets, get_deleted_objects
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.forms.models import modelform_factory, ModelForm
-from netwizard.core import manager as componentmgr
 import forms
 import models
 import widgets

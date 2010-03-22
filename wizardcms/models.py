@@ -298,7 +298,7 @@ class PageSection(models.Model):
 
     def save(self, force_insert=False, force_update=False):
         if not self.display_order:
-            self.display_order = self.page.pagesection_set.all().count() + 1
+            self.display_order = self.page.sections.all().count() + 1
         return super(PageSection, self).save(force_insert,force_update)
 
     @property

@@ -1,7 +1,6 @@
 from django.contrib.admin import site
 from django.shortcuts import render_to_response
 from django import template
-from netwizard.core import manager
 import sitemenu
 
 class AntyAdmin:

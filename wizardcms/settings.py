@@ -10,5 +10,6 @@ BASE_APPS = (
         'registry',
         'tabbedadmin',
         'django_widgets',
+        'tabbedadmin',
         'chunks',
         )
