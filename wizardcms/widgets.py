@@ -65,3 +65,7 @@ class GlobalSearch(Widget):
                'keyword': session.get('wizardcms.search.keyword') or '',
                }
         return render_to_string('wizardcms/widgets/global_search.html', ctx)
+
+
+class AdminCategoryTreeWidget(forms.widgets.Select):
+    pass

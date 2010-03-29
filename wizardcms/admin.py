@@ -1,5 +1,6 @@
 from django.contrib import admin
 from tabbedadmin import admin as tabadmin
+from tabbedadmin.forms import TabbedForm
 from django.contrib.admin import site, options
 from django.contrib.admin.util import quote, unquote, flatten_fieldsets, get_deleted_objects
 from django.utils.translation import ugettext_lazy as _
@@ -8,6 +9,8 @@ from django.forms.models import modelform_factory, ModelForm
 import forms
 import models
 import widgets
+import mptt.forms
+from django.forms import ValidationError
 
 class TemplateAdmin(admin.ModelAdmin):
     list_display = ('name', 'type',)
@@ -47,7 +50,20 @@ class PageAttachmentInline(admin.TabularInline):
     model = models.PageAttachment
     extra = 1
 
+
+class NodeForm(TabbedForm):
+    class Meta:
+        model = models.Node
+    def clean_parent(self):
+        if self.cleaned_data['parent'].id == self.instance.id:
+            raise ValidationError('Parent node cannot be set to itself')
+        if self.instance.level and self.cleaned_data['parent'].level > self.instance.level:
+            raise ValidationError('Invalid parent node')
+        return self.cleaned_data['parent']
+
+
 class NodeAdmin(tabadmin.TabbedModelAdmin):
+    form = NodeForm
     change_list_template = "admin/wizardcms/page/change_list.html"
     change_form_template = "admin/wizardcms/node/change_form.html"
     list_display = ('id','title','slug','language','get_navigation_path','status','created_at','updated_at')
@@ -131,6 +147,7 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('id', 'symbol', 'name', 'description',)
 
 class PageAdmin(tabadmin.TabbedModelAdmin):
+    form = NodeForm
     change_list_template = "admin/wizardcms/page/change_list.html"
     list_display = ('id','title','slug','language','get_navigation_path','status','category','display_order','created_at','updated_at')
     list_filter = ('language','category','status','created_at','updated_at')
@@ -192,6 +209,21 @@ class PageAdmin(tabadmin.TabbedModelAdmin):
         if parent_id:
             qs = qs.filter(parent=parent_id)
         return qs
+
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "parent":
+            return mptt.forms.TreeNodeChoiceField(
+                queryset=models.Node.objects.all().order_by('lft'), 
+                **kwargs)
+        return super(PageAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+    """
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == 'category':
+            kwargs['widget'] = widgets.AdminCategoryTreeWidget
+        return super(PageAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+    """
 
 
 class Tree(object):

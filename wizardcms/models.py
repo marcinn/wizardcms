@@ -15,6 +15,10 @@ from django.utils.safestring import mark_safe, mark_for_escaping
 from django.template.loader import get_template_from_string
 from django.template import Context
 from django.contrib.markup.templatetags.markup import markdown
+from django.db.models import signals 
+import mptt
+import mptt.forms
+import mptt.signals
 
 
 def _dummy_processor(s):
@@ -173,7 +177,7 @@ class Node(models.Model):
 
         if not self.content_type_id:
             self.content_type = ContentType.objects.get_for_model(self.__class__)
-            super(Node, self).save(force_insert=force_insert, force_update=force_update)
+            #super(Node, self).save(force_insert=force_insert, force_update=force_update)
 
         return super(Node, self).save(force_insert,force_update)
 
@@ -218,6 +222,7 @@ class PageManager(NodeManager):
     def published(self):
         return self.get_query_set().published()
 
+
 class Page(Node):
     """ is a sitemap node concrete element, that holds sections with content """
     publish_from = models.DateField(null=True, blank=True, help_text=_('Set optional publication period'), verbose_name=_('publish from'))
@@ -226,7 +231,8 @@ class Page(Node):
     introduction = models.TextField(blank=True, null=True, verbose_name=_('introduction'))
     description = models.TextField(blank=True, null=True, verbose_name=_('description'))
     post_date = models.DateField(null=True, verbose_name=_('post date'))
-    category = models.ForeignKey(Category, related_name='pages', null=True, blank=True, verbose_name=_('category'))
+    category = models.ForeignKey(Category, related_name='pages', null=True,
+            blank=True, verbose_name=_('category'))
     photo = models.ImageField(max_length=255, null=True, blank=True,
             upload_to=os.path.join('uploads','pages'), verbose_name=_('page photo'),)
     objects = PageManager()
@@ -242,6 +248,12 @@ class Page(Node):
         """
         return not (self.publish_from and self.publish_to) and self.is_published
     get_is_published.short_description = _('is published')
+
+    def save(self, force_insert=False, force_update=False):
+        result = super(Page, self).save(force_insert=force_insert,
+                force_update=force_update)
+        self.__class__.tree.rebuild() # dirty hack
+        return result
 
     @models.permalink
     def get_absolute_url(self):
@@ -307,6 +319,9 @@ class PageSection(models.Model):
         content = mark_safe(markups[self.markup](self.content))
         return get_template_from_string(self.template.content).render(Context({'title': self.title, 'content': content}))
 
+
+    def __unicode__(self):
+        return "#%d" % self.display_order
 
 
 class PageAttachmentManager(models.Manager):
@@ -427,3 +442,4 @@ class MenuItem(models.Model):
         return super(MenuItem, self).save(force_insert=force_insert, force_update=force_update)
 
 
+mptt.register(Node)
