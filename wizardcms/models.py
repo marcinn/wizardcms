@@ -347,7 +347,13 @@ class PageAttachment(models.Model):
         verbose_name_plural = _('attachments')
 
     def __unicode__(self):
-        return self.name or self.file_path
+        return self.name or self.file_path.name
+
+    def save(self, force_insert=False, force_update=False):
+        if not self.name and self.file_path:
+            self.name = self.file_path.name
+        return super(PageAttachment, self).save(force_insert=force_insert,
+                force_update=force_update)
 
 class MenuManager(models.Manager):
     def published(self):
