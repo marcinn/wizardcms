@@ -24,7 +24,7 @@ class Menu(Widget):
             return {
                 'menu': Menu.objects.published().get(symbol=value),
                 }
-        except models.Menu.DoesNotExist:
+        except Menu.DoesNotExist:
             return {}
         
 
