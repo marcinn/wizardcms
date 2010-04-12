@@ -55,11 +55,13 @@ class NodeForm(TabbedForm):
     class Meta:
         model = models.Node
     def clean_parent(self):
-        if self.cleaned_data['parent'].id == self.instance.id:
-            raise ValidationError('Parent node cannot be set to itself')
-        if self.instance.level and self.cleaned_data['parent'].level > self.instance.level:
-            raise ValidationError('Invalid parent node')
-        return self.cleaned_data['parent']
+        if self.cleaned_data['parent']:
+            if self.cleaned_data['parent'].id == self.instance.id:
+                raise ValidationError('Parent node cannot be set to itself')
+            if self.instance.level and self.cleaned_data['parent'].level > self.instance.level:
+                raise ValidationError('Invalid parent node')
+            return self.cleaned_data['parent']
+        return None
 
 
 class NodeAdmin(tabadmin.TabbedModelAdmin):
@@ -213,8 +215,10 @@ class PageAdmin(tabadmin.TabbedModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "parent":
+            kwargs['empty_label'] = ''
+            kwargs['required'] = False
             return mptt.forms.TreeNodeChoiceField(
-                queryset=models.Node.objects.all().order_by('lft'), 
+                queryset=models.Node.objects.all().order_by('tree_id', 'lft', 'level',), 
                 **kwargs)
         return super(PageAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
