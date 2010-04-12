@@ -1,5 +1,5 @@
 from django_widgets import Widget as BaseWidget
-from models import *
+import models
 from django import forms
 from django.template.loader import get_template_from_string, Context, render_to_string
 from django.template import TemplateSyntaxError, TemplateDoesNotExist, compile_string
@@ -22,9 +22,9 @@ class Menu(Widget):
     def get_context(self, value, options):
         try:
             return {
-                'menu': Menu.objects.published().get(symbol=value),
+                'menu': models.Menu.objects.published().get(symbol=value),
                 }
-        except Menu.DoesNotExist:
+        except models.Menu.DoesNotExist:
             return {}
         
 
