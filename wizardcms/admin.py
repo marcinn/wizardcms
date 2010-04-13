@@ -58,8 +58,10 @@ class NodeForm(TabbedForm):
         if self.cleaned_data['parent']:
             if self.cleaned_data['parent'].id == self.instance.id:
                 raise ValidationError('Parent node cannot be set to itself')
-            if self.instance.level and self.cleaned_data['parent'].level > self.instance.level:
+            if self.cleaned_data['parent'].level > self.instance.level:
                 raise ValidationError('Invalid parent node')
+            if self.cleaned_data['parent'] in self.instance.children.all():
+                raise ValidationError('Invalid parent node - childs')
             return self.cleaned_data['parent']
         return None
 

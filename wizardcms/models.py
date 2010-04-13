@@ -160,6 +160,8 @@ class Node(models.Model):
         while item.parent:
             item = item.parent
             path.append(item)
+            if len(path)>100:
+                raise RuntimeError('Maximum node navigation path exceed')
         path.reverse()
         return path
     get_navigation_path.short_description = _('Navigation')
