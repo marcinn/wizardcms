@@ -315,6 +315,15 @@ class PageSection(models.Model):
             self.display_order = self.page.sections.all().count() + 1
         return super(PageSection, self).save(force_insert,force_update)
 
+    def _format_content(self):
+        """
+        temporary method
+        in future content will be defined as MarkupField
+        with plain and html properties
+        """
+        markups = dict(MARKUP_PROCESSORS)
+        return mark_safe(markups[self.markup](self.content))
+
     @property
     def as_html(self):
         markups = dict(MARKUP_PROCESSORS)

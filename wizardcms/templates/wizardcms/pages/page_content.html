@@ -1,0 +1,5 @@
+{% load wizardcms_tags %}
+
+{% for section in page.sections.all %}
+    {% render_section section %}
+{% endfor %}

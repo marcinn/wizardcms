@@ -3,6 +3,7 @@ from django import template
 from wizardcms.utils import parse_tracwiki
 from wizardcms.models import Page, Menu, MenuItem
 from django.template import TemplateSyntaxError
+from django.template.loader import get_template_from_string
 
 register = template.Library()
 
@@ -22,6 +23,24 @@ def wizardcms_pages_navigation(cl):
             'navigation': NodeTreeNavigation(cl.query_set.query.where, 'urltemplate'),
             }
     #    return mark_for_escaping(cl.query_set.query.where)
+
+class SectionNode(template.Node):
+    def __init__(self, section, cast_as=None):
+        self.section = section
+        self.cast_as = cast_as
+
+    def render(self, context):
+        section = self.section.resolve(context)
+        context.push()
+        context.update(section.__dict__) # copy whole section properties
+        context['content'] = section._format_content()
+        result = get_template_from_string(
+                section.template.content).render(context)
+        context.pop()
+        if self.cast_as:
+            context[self.cast_as] = result
+            return ''
+        return result
 
 
 class PageListNode(template.Node):
@@ -153,3 +172,10 @@ def get_menu_items(parser, token):
     return MenuItemsNode(bits[1], bits[3])
 
     
+@register.tag
+def render_section(parser, token):
+    bits = token.contents.split()
+    if len(bits) <2 or len(bits) >3:
+        raise TemplateSyntaxError, "%s tag takes one argument - section" % bits[0]
+    return SectionNode(parser.compile_filter(bits[1]))
+

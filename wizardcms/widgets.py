@@ -29,17 +29,10 @@ class Menu(Widget):
         
 
 class WizardCmsRenderPage(Widget):
-    def render(self, name, value=None, options=None, **html):
-        """
-        render Page (provided as value) to html using page template
-        """
+    template = 'wizardcms/pages/page_content.html'
 
-        output = []
-        for section in value.sections.all():
-            output.append(section.as_html)
-            
-        return ''.join(output)
-
+    def get_context(self, page, options):
+        return {'page': page,}
 
 class AdminTemplateEditWidget(forms.widgets.Textarea):
     def render(self, name, value, attrs=None):
