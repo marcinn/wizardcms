@@ -2,11 +2,10 @@ from django.contrib import admin
 from tabbedadmin import admin as tabadmin
 from tabbedadmin.forms import TabbedForm
 from django.contrib.admin import site, options
-from django.contrib.admin.util import quote, unquote, flatten_fieldsets, get_deleted_objects
+from django.contrib.admin.util import flatten_fieldsets
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.forms.models import modelform_factory, ModelForm
-import forms
+from django.forms.models import modelform_factory
 import models
 import widgets
 import mptt.forms
@@ -303,15 +302,3 @@ site.register(models.Category, CategoryAdmin)
 site.register(models.Menu, MenuAdmin)
 site.register(models.Language)
 site.register(models.Template, TemplateAdmin)
-
-try:
-    from antymedia.antyadmin import sitemenu
-    from plugins import CmsSummary
-    from django.conf import settings
-    sitemenu.connect('apps', _('Content management'), settings.ADMIN_URL + 'wizardcms', name='apps.wizardcms')
-    sitemenu.connect('apps', _('Announcements'), settings.ADMIN_URL + 'announcements')
-    sitemenu.connect('apps', _('Text blocks'), settings.ADMIN_URL + 'chunks')
-    site.register_dashboard(CmsSummary())
-except ImportError, e:
-    print e
-    pass

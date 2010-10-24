@@ -2,11 +2,8 @@
 WizardCMS plugins API
 """
 
-import exceptions
-from django.core.urlresolvers import reverse
 from django import template 
 from wizardcms import models 
-from django.db.models import Q
 
 
 """
@@ -14,7 +11,6 @@ Dashboard
 """
 
 try:
-    from antymedia.antyadmin.admin import site
 
     class CmsSummary(object):
         title = "Podsumowanie CMS"

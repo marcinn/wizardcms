@@ -1,6 +1,5 @@
 BASE_APPS = (
         'wizardcms',
-        'antymedia.antyadmin',
         'attachments',
         'announcements',
         'banners',
