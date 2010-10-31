@@ -3,7 +3,6 @@ wizardCMS default models
 """
 
 import os
-import datetime
 # from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -11,14 +10,18 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from utils import parse_tracwiki, slugify
 from django.utils.html import linebreaks, escape
-from django.utils.safestring import mark_safe, mark_for_escaping
+from django.utils.safestring import mark_safe
 from django.template.loader import get_template_from_string
 from django.template import Context
 from django.contrib.markup.templatetags.markup import markdown
-from django.db.models import signals 
 import mptt
-import mptt.forms
-import mptt.signals
+
+try:
+    from mptt.models import MPTTModel
+except ImportError:
+    MPTTModel = models.Model
+
+
 
 
 def _dummy_processor(s):
@@ -111,7 +114,7 @@ class NodeTypes(object):
         return self.types.values_list('id', 'model').__iter__()
 
 
-class Node(models.Model):
+class Node(MPTTModel):
     """ a sitemap node model """
     language = models.ForeignKey(Language, verbose_name=_('language'))
     parent = models.ForeignKey('self', null=True, blank=True, related_name="child_nodes", verbose_name=_('parent node'))
@@ -459,4 +462,5 @@ class MenuItem(models.Model):
         return super(MenuItem, self).save(force_insert=force_insert, force_update=force_update)
 
 
-mptt.register(Node)
+if hasattr('mptt', 'register'):
+    mptt.register(Node)
